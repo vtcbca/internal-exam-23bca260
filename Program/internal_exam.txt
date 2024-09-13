@@ -1,0 +1,59 @@
+Q.11 * CREATE TABLE TEAM(TID,COUNTRY,TOTALMATCH,WIN,LOSS). INSERT 8 TEAM DETAILS. CREATE TRIGGER TO VERIFY TOTALMATCH IS NOT 0. 
+EXPORT DATA INTO CSV FILE.READ FILE USING READER OBJECT AND PRINT RECORD WITH WINNING %AGE. 
+
+
+.open abc.db
+## CREATE TABLE :
+sqlite> create table team (tid int primary key,country ,totalmatch,win ,loss );
+sqlite> insert into team values(1,'india',100,60,40);
+sqlite> insert into team values(1,'usa',100,50,50);
+Runtime error: UNIQUE constraint failed: team.tid (19)
+sqlite> insert into team values(2,'usa',100,50,50);
+sqlite> insert into team values(3,'uk',80,40,40);
+sqlite> insert into team values(4,'india',110,60,50);
+sqlite> insert into team values(5,'india',120,60,60);
+sqlite> insert into team values(6,'usa',80,60,20);
+sqlite> insert into team values(7,'uk',90,60,30);
+sqlite> insert into team values(8,'india',150,60,90);
+
+## PRINT RECORD :
+
+sqlite> .mode table
+sqlite> select * from team;
++-----+---------+------------+-----+------+
+| tid | country | totalmatch | win | loss |
++-----+---------+------------+-----+------+
+| 1   | india   | 100        | 60  | 40   |
+| 2   | usa     | 100        | 50  | 50   |
+| 3   | uk      | 80         | 40  | 40   |
+| 4   | india   | 110        | 60  | 50   |
+| 5   | india   | 120        | 60  | 60   |
+| 6   | usa     | 80         | 60  | 20   |
+| 7   | uk      | 90         | 60  | 30   |
+| 8   | india   | 150        | 60  | 90   |
++-----+---------+------------+-----+------+
+
+## EXPORT DATA INTO CSV FILE :
+
+sqlite> .mode column
+sqlite> .mode csv
+sqlite> .output D:\REEMA\sqlite\csv\team.csv
+sqlite> select * from team;
+
+## READ FILE USING READER OBJECT : 
+from csv import reader
+
+with open("D://REEMA//sqlite//csv//team.csv","r") as f:
+    r=reader(f)
+    for row in r:
+        print(row)
+        
+['tid', 'country', 'totalmatch', 'win', 'loss']
+['1', 'india', '100', '60', '40']
+['2', 'usa', '100', '50', '50']
+['3', 'uk', '80', '40', '40']
+['4', 'india', '110', '60', '50']
+['5', 'india', '120', '60', '60']
+['6', 'usa', '80', '60', '20']
+['7', 'uk', '90', '60', '30']
+['8', 'india', '150', '60', '90']
